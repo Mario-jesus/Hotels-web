@@ -1,1 +1,4 @@
-client
+# Carpeta de pruebas
+tests
+# Compilaciones de TS a JS
+js
