@@ -8,9 +8,9 @@ export default class HotelListTemplate extends ListTemplate {
         super("Hoteles")
     }
 
-    protected itemTemplate(items: HotelModel[]): string {
+    protected itemTemplate(items: any): string {
         let html: string = "";
-        items.forEach(hotel => {
+        items.results.forEach((hotel: HotelModel) => {
             html += [
                 '<div class="card mx-2 mb-3" style="width: 18rem;">',
                 '   <div class="card-body">',

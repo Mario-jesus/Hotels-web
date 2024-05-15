@@ -18,13 +18,14 @@ export default {
             this.createAlert(json.message, json.type, alertId);
         }
     },
-    renderSelector(url: string, elementSelectId: string, elementCallback: Function): void {
+    renderSelector(url: string, elementSelectId: string, elementCallback: Function, result: boolean = true): void {
         let elementSelect = <HTMLSelectElement>document.getElementById(elementSelectId);
         if (!elementSelect) return;
 
         let response = request.serverRequest(url, "GET");
-        response.then(data => data.json()).then((elements: any[]) => {
-            elements.forEach((element) => {
+        response.then(data => data.json()).then((elements: any) => {
+            let data: any[] = result ? elements.results : elements;
+            data.forEach((element: any) => {
                 let option = document.createElement("option");
                 let data = elementCallback(element);
                 option.value = data.value;

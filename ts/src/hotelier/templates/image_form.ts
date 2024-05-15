@@ -35,7 +35,7 @@ export default class ImageFormTemplate extends FormTemplate {
         // Renderizar los servicios en el selector
         utilities.renderSelector(urls_api.imageCategories, "inputCategory", (imageCategory: imageCategory) => {
             return { value: imageCategory.id, textContent: imageCategory.name };
-        });
+        }, false);
     }
 
     protected async getFormAttributes() {

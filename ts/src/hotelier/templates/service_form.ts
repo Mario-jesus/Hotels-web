@@ -35,7 +35,7 @@ export default class ServicesFormTemplate extends FormTemplate {
         // Renderizar los servicios en el selector
         utilities.renderSelector(urls_api.services, "inputService", (service: services) => {
             return { value: service.id, textContent: service.name };
-        });
+        }, false);
     }
 
     protected async getFormAttributes() {

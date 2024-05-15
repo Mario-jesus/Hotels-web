@@ -19,7 +19,6 @@ export interface HotelModel {
 
 export interface servicesHotelMany {
     id: string;
-    hotel: string;
     price?: string;
     description?: string;
     service: services;
@@ -40,7 +39,6 @@ export interface services {
 
 export interface imagesMany {
     id: string;
-    hotel: string;
     image: string;
     description?: string;
     category: imageCategory;

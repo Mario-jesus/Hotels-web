@@ -14,12 +14,15 @@ export var urls_api = {
     imageCategories: `${host_api}image-categories/`,
     dashboardStripeLink: `${host_api}generate_dashboard_stripe_link/`,
     accountLink: `${host_api}generate_account_link/`,
+    roomAvailability: `${host_api}room_availability/`,
+    reservationWithNewCard: `${host_api}reservations/new_card/`,
 };
 
 export var urls_front = {
     home: `${host_front}`,
     login: `${host_front}?template=login`,
     signup: `${host_front}?template=signup`,
+    // URLs del hotelero
     hotel_list: `${host_front}?template=hotel_list`,
     hotel_register: `${host_front}?template=hotel_register`,
     hotel_edit: `${host_front}?template=hotel_edit`,
@@ -32,4 +35,10 @@ export var urls_front = {
     image_list: `${host_front}?template=image_list`,
     image_register: `${host_front}?template=image_register`,
     image_edit:`${host_front}?template=image_edit`,
+    // URLs del cliente
+    detail: `${host_front}?template=detail`,
+    checkout: `${host_front}?template=checkout`,
+    reservations: `${host_front}?template=reservations`,
 };
+
+export const STRIPE_PUBLIC_KEY: string = "pk_test_51Orj3ULMBegX0ayWa0iE8VjlSq4QwadhCmTUEWo43TWPOk6kznsx6bn5FFsDpfEDQRFXx7QmHQwpFrYAiyF8pkD600IC9DapHg";

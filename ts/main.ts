@@ -1,6 +1,7 @@
 import AppSettings  from "./src/settings/app.js";
 import AppAccount from "./src/account/app.js";
 import AppHotelier from "./src/hotelier/app.js";
+import AppCustomer from "./src/customer/app.js";
 import Session from "./src/settings/modules/session.js";
 
 addEventListener("DOMContentLoaded", main);
@@ -44,6 +45,8 @@ class Main {
                 break;
 
             case "Customer":
+                let appCustomer = new AppCustomer();
+                appCustomer.load();
                 break;
 
             default:

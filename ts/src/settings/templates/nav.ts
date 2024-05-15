@@ -62,10 +62,10 @@ export default class NavTemplate {
             case "Customer":
                 items = [
                     '<li class="nav-item">',
-                    '   <a class="nav-link active" aria-current="page" href="#">Inicio</a>',
+                    `   <a class="nav-link active" aria-current="page" href="${urls_front.home}">Inicio</a>`,
                     '</li>',
                     '<li class="nav-item">',
-                    '   <a class="nav-link active" aria-current="page" href="#">Reservas</a>',
+                    `   <a class="nav-link active" aria-current="page" href="${urls_front.reservations}">Reservas</a>`,
                     '</li>',
                     '<li class="nav-item active dropdown">',
                     '   <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">',
@@ -107,7 +107,7 @@ export default class NavTemplate {
         
 
         let nav = [
-            '<nav class="navbar navbar-expand-lg bg-body-tertiary">',
+            '<nav class="navbar navbar-expand-lg bg-body-tertiary" id="navbar">',
             '   <div class="container-fluid">',
             '       <a class="navbar-brand" href="#">Hotels</a>',
             '       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">',
@@ -134,10 +134,11 @@ export default class NavTemplate {
             console.error("No se ha encontrado el elemento 'header' para agregar la barra de navegación.");
         }
 
+        this.addEventsListener();
         this.loadNavbarData();
     }
 
-    private async loadNavbarData(): Promise<void> {
+    private addEventsListener() {
         //  Escuchar eventos del logout si el usuario esta autenticado
         if (this.userType == "Hotelier" || this.userType == "Customer") {
             let logOut = <HTMLElement>document.getElementById('logOut');
@@ -145,7 +146,9 @@ export default class NavTemplate {
                 this.session.destroySession();
             });
         }
+    }
 
+    private async loadNavbarData(): Promise<void> {
         switch (this.userType) {
             case "Hotelier":
                 // Load express dashboard

@@ -52,7 +52,7 @@ export default abstract class ListTemplate {
 
         let response = request.serverRequest(url, "GET");
         response.then((data) => data.json()).then((items: any) => {
-            html = this.itemTemplate(items);
+            html = this.itemTemplate(items);// items.results - despues de paginar hotels
 
             if (itemsContainer) {
                 itemsContainer.innerHTML = html;
