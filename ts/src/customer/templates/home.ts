@@ -56,7 +56,7 @@ export default class Home {
             '<section class="section section--info cont">',
             '   <div class="section__texts">',
             '       <h2 class="section__title">Reserva con Confianza: Tu Experiencia Perfecta Comienza Aquí.</h2>',
-            '       <p class="section__paragraph">En nuestra plataforma, crear tu reserva es más fácil que nunca. Con un proceso rápido y seguro, puedes asegurar tu estancia con tan solo unos pocos clics. Además, nuestro equipo de hoteleros altamente capacitados está aquí para asistirte en cada paso del camino. Desde ayudarte a seleccionar la habitación perfecta que se adapte a tus necesidades y preferencias hasta proporcionarte información detallada sobre las comodidades disponibles, estamos comprometidos a hacer que tu experiencia de reserva sea lo más placentera y sin complicaciones posible. Tu comodidad y satisfacción son nuestra prioridad, y estamos aquí para asegurarnos de que tu estancia sea inolvidable desde el momento en que reservas con nosotros.</p>',
+            '       <p class="section__paragraph">En nuestra plataforma, crear tu reserva es más fácil que nunca. Con un proceso rápido y seguro, puedes asegurar tu estancia con tan solo unos pocos clics. Además, nuestro equipo de hoteleros altamente capacitados está aquí para asistirte en cada paso del camino. Desde ayudarte a seleccionar la habitación perfecta que se adapte a tus necesidades y preferencias hasta proporcionarte información detallada sobre las comodidades disponibles, estamos comprometidos a hacer que tu experiencia de reserva sea lo más placentera y sin complicaciones posible.</p>',
             '   </div>',
             '   <img src="/imgs/undraw_booking_re_gw4j.svg" alt="reservas" class="section__img">',
             '</section>',
@@ -123,31 +123,10 @@ export default class Home {
             this.createHotels(data.results, keyword);
 
             // render pagination
-            this.createPagination(data.count, data.next, page, data.previous, keyword);
+            utilities.createPagination(
+                urls_front.home, data.count, data.next, page, data.previous, `search=${keyword}`
+            );
         });
-    }
-
-    private createPagination(count: number, next: null | string, current: undefined | string, previous: null | string, keyword: string) {
-        let paginationContainer = document.getElementById("paginationContainer");
-        if (!paginationContainer) throw new Error("'pagination' not found.");
-        if (!current) current = "1";
-        let pages = Math.ceil(count / 9);
-        if (next) next = new URLSearchParams(next.substring(next.indexOf("?") + 1)).get("page");
-        if (previous) previous = new URLSearchParams(previous.substring(previous.indexOf("?") + 1)).get("page");
-        let pagesList: string[] = [];
-
-        if (next) pagesList.push(`<li class="page-item"><a class="page-link" href="${urls_front.home}?search=${keyword}&page=${next}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`);
-        else pagesList.push(`<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`);
-
-        for (let i = 1; i <= pages; i++) {
-            if (i == Number(current)) pagesList.push(`<li class="page-item active"><a class="page-link" href="${urls_front.home}?search=${keyword}&page=${i}">${i}</a></li>`);
-            else pagesList.push(`<li class="page-item"><a class="page-link" href="${urls_front.home}?search=${keyword}&page=${i}">${i}</a></li>`);
-        }
-
-        if (previous) pagesList.push(`<li class="page-item"><a class="page-link" href="${urls_front.home}?search=${keyword}&page=${previous}" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a></li>`);
-        else pagesList.push(`<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a></li>`);
-
-        paginationContainer.innerHTML = pagesList.join("");
     }
 
     private createHotelCard(hotel: any) {
@@ -155,16 +134,17 @@ export default class Home {
             `<a class="card mb-3 card__content" style="max-width: 540px; text-decoration: none;" href="${urls_front.detail}&id=${hotel.id}">`,
             '   <div class="row g-0">',
             '       <div class="col-md-4">',
-            '           <img src="/imgs/ciudad-maderas-MXbM1NrRqtI-unsplash.jpg" class="img-fluid rounded-start card__img" alt="ciudad-maderas">',
+            `           <img src="${hotel.image}" class="img-fluid rounded-start card__img" alt="${hotel.name}">`,
             '       </div>',
             '       <div class="col-md-8">',
             '           <div class="card-body">',
             '               <div class="card__title">',
             `                   <h5 class="card-title">${hotel.name}</h5>`,
-            '                   <div id="containerRating">',
+            '                   <div>',
+            `                       ${utilities.renderStars(hotel.rating)}`,
             '                   </div>',
             '               </div>',
-            `               <p class="card-text">${hotel.description.substring(0, 120)}...</p>`,
+            `               <p class="card-text card__description" style="max-height: 50px !important;">${hotel.description}</p>`,
             `               <p class="card-text"><small class="text-body-secondary">${hotel.city} - ${hotel.state}</small></p>`,
             '           </div>',
             '       </div>',

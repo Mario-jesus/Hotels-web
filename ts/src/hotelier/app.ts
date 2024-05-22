@@ -1,3 +1,4 @@
+import Home from "./templates/home.js";
 import HotelListTemplate from "./templates/hotel_list.js";
 import HotelFormTemplate from "./templates/hotel_form.js";
 import RoomListTemplate from "./templates/room_list.js";
@@ -9,6 +10,7 @@ import ImageFormTemplate from "./templates/image_form.js";
 
 export default class AppHotelier {
     template: string | null;
+    home: Home;
     hotelListTemplate: HotelListTemplate;
     hotelRegisterTemplate: HotelFormTemplate;
     hotelEditTemplate: HotelFormTemplate;
@@ -24,6 +26,7 @@ export default class AppHotelier {
 
     constructor() {
         this.template = new URLSearchParams(location.search).get("template");
+        this.home = new Home();
         this.hotelListTemplate = new HotelListTemplate();
         this.hotelRegisterTemplate = new HotelFormTemplate("register");
         this.hotelEditTemplate = new HotelFormTemplate("edit");
@@ -89,6 +92,7 @@ export default class AppHotelier {
                 break;
 
             default:
+                this.home.load();
                 break;
         }
     }

@@ -32,32 +32,38 @@ export default class Checkout {
         ].join("");
     }
 
-    private initialize() {
+    private async getClientSecret(): Promise<string> {
+        // Obtener los datos de compra del cliente
         let reservationData = JSON.parse(sessionStorage.getItem("reservationData") ?? "{}");
-        sessionStorage.removeItem("reservationData");
+        // Realizar la petición de compra
+        const response = await request.serverRequest(urls_api.reservationWithNewCard, "POST", reservationData);
 
-        const response = request.serverRequest(urls_api.reservationWithNewCard, "POST", reservationData);
+        const data = await response.json();
 
-        response.then((resp: Response) => {
-            if (!resp.ok) {
-                utilities.createAlert("Ha ocurrido un error al intentar realizar el pago.", "danger");
-                console.error(resp.json());
-                throw new Error(resp.statusText);
-            }
-            return resp.json();
-        }).then((data) => {
-            const appearance = {
-                theme: 'stripe',
-            };
-            this.elements = this.stripe.elements({ appearance, clientSecret: data.clientSecret });
+        if (!response.ok) {
+            utilities.createAlert("Ha ocurrido un error al intentar realizar el pago.", "danger");
+            console.error(data);
+            throw new Error(response.statusText);
+        }
 
-            const paymentElementOptions = {
-                layout: "tabs",
-            };
+        return data.clientSecret;
+    }
 
-            const paymentElement = this.elements.create("payment", paymentElementOptions);
-            paymentElement.mount("#payment-element");
-        });
+    private async initialize() {
+        let clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
+        if (!clientSecret) clientSecret = await this.getClientSecret();
+
+        const appearance = {
+            theme: 'stripe',
+        };
+        this.elements = this.stripe.elements({ appearance, clientSecret });
+
+        const paymentElementOptions = {
+            layout: "tabs",
+        };
+
+        const paymentElement = this.elements.create("payment", paymentElementOptions);
+        paymentElement.mount("#payment-element");
     }
 
     private addEventForm() {
@@ -84,7 +90,7 @@ export default class Checkout {
         });
     }
 
-    private async checkStatus() {
+    private async checkStatus(): Promise<void> {
         const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
         if (!clientSecret) return;
 
@@ -92,7 +98,8 @@ export default class Checkout {
 
         switch (paymentIntent.status) {
             case "succeeded":
-                utilities.createAlert("¡Su pago ha sido completado!", "success");
+                sessionStorage.removeItem("reservationData");
+                location.href = `${urls_front.reservations}&message=${encodeURIComponent("¡Su pago ha sido completado!")}`;
                 break;
 
             case "processing":
@@ -126,18 +133,10 @@ export default class Checkout {
         }
     }
 
-    public load() {
-        const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
-
-        if (clientSecret) {
-            if (this.main) {
-                this.main.innerHTML = '<div class="cont" id="liveAlertPlaceholder"></div>';
-                this.checkStatus();
-            }
-        } else {
-            this.renderTemplate();
-            this.initialize();
-            this.addEventForm();
-        }
+    public async load(): Promise<void> {
+        this.renderTemplate();
+        await this.checkStatus();
+        await this.initialize();
+        this.addEventForm();
     }
 }

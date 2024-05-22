@@ -7,14 +7,12 @@ export default class AppCustomer {
     template: string | null;
     home: Home;
     detail: Detail;
-    checkout: Checkout;
     reservations: Reservations;
 
     constructor() {
         this.template = new URLSearchParams(location.search).get("template");
         this.home = new Home();
         this.detail = new Detail();
-        this.checkout = new Checkout();
         this.reservations = new Reservations();
     }
 
@@ -25,7 +23,8 @@ export default class AppCustomer {
                 break;
 
             case "checkout":
-                this.checkout.load();
+                const checkout = new Checkout();
+                checkout.load();
                 break;
 
             case "reservations":

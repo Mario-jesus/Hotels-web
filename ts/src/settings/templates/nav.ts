@@ -151,15 +151,22 @@ export default class NavTemplate {
     private async loadNavbarData(): Promise<void> {
         switch (this.userType) {
             case "Hotelier":
-                // Load express dashboard
-                let dashboard_stripe_link = await generate_dashboard_stripe_link();
-                let navExpress = <HTMLLinkElement>document.getElementById("navExpress");
-                navExpress.href = dashboard_stripe_link;
+                try {
+                    // Load express account
+                    let account_link = await generate_account_link();
+                    if (typeof account_link !== "string") throw new Error("Ah ocurrido un error al intentar acceder a la cuenta de stripe.");
+                    let navExpressAccount = <HTMLLinkElement>document.getElementById("navExpressAccount");
+                    navExpressAccount.href = account_link;
 
-                // Load express account
-                let account_link = await generate_account_link();
-                let navExpressAccount = <HTMLLinkElement>document.getElementById("navExpressAccount");
-                navExpressAccount.href = account_link;
+                    // Load express dashboard
+                    let dashboard_stripe_link = await generate_dashboard_stripe_link();
+                    if (typeof dashboard_stripe_link !== "string") throw new Error("Ah ocurrido un error al intentar acceder al panel de express.");
+                    let navExpress = <HTMLLinkElement>document.getElementById("navExpress");
+                    navExpress.href = dashboard_stripe_link;
+                }
+                catch (error) {
+                    console.error(error);
+                }
                 break;
 
             case "Customer":

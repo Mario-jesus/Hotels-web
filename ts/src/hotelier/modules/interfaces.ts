@@ -2,6 +2,7 @@ export interface HotelModel {
     id: string;
     hotelier: string;
     name: string;
+    image: string;
     description: string;
     phone: string
     address: string;

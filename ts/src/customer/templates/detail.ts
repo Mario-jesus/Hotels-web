@@ -27,7 +27,7 @@ export default class Detail {
             '<div class="detail cont">',
             '   <section class="section section--header">',
             `       <h3 class="title-1">${hotel.name}</h3>`,
-            '       <div class="rating" id="hotelRating"></div>',
+            `       <div class="rating" id="hotelRating">${utilities.renderStars(hotel.rating)}</div>`,
             '   </section>',
             '   <section class="section section--pictures">',
             '       <input type="text" id="currentImage" title="currentImage" style="display: none;">',
@@ -91,9 +91,9 @@ export default class Detail {
             '               <input type="submit" value="Ver disponibilidad" class="btn btn-primary">',
             '           </form>',
             '           <div class="reservation__container">',
-            '               <div style="display: flex; align-items: center; gap: 2em;">',
+            '               <div style="display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; column-gap: 2em; row-gap: 1em;">',
             '                   <div style="font-size: 1.3rem; font-weight: 600;">Total: <span id="amount">0</span> MXN</div>',
-            '                   <button class="btn btn-warning" id="btnReserve">Reservar ahora</button>',
+            '                   <button class="btn btn-warning" id="btnReserve" disabled>Reservar ahora</button>',
             '               </div>',
             '               <div class="row g-3 needs-validation">',
             '                   <div class="col-md-12">',
@@ -122,7 +122,7 @@ export default class Detail {
             '       </div>',
             '       <div class="table-responsive">',
             '           <table class="table align-middle table-bordered table__rooms">',
-            '               <thead>',
+            '               <thead class="table-primary">',
             '                   <tr>',
             '                       <th>Tipo de habitación</th>',
             '                       <th>Capacidad de personas</th>',
@@ -388,6 +388,11 @@ export default class Detail {
                     selectContainer.innerHTML = rooms.join("");
                 });
             });
+
+            // Activar las reservas
+            const btnReserve = <HTMLButtonElement>document.getElementById("btnReserve");
+            btnReserve.disabled = false;
+            this.createReservation();
         });
     }
 
@@ -470,7 +475,6 @@ export default class Detail {
 
     private addEventListener() {
         this.getAvailability();
-        this.createReservation();
         this.setAmount();
     }
 

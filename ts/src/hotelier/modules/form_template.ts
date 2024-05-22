@@ -135,10 +135,10 @@ export default abstract class FormTemplate {
                 if (!resp.ok) {
                     this.eventFormError(resp);
                 } else {
-                    try {
-                        return resp.json();
-                    } catch {
+                    if (resp.status == 204) {
                         return;
+                    } else {
+                        return resp.json();
                     }
                 }
             }).then((data: any) => {
@@ -185,7 +185,7 @@ export default abstract class FormTemplate {
 
         if (this.typeForm === "edit") {
             form += [
-                '<form class="d-grid gap-2" id="deleteForm" style="max-width: 1000px; margin: 0 auto 2em !important; padding: 0 1.5em;">',
+                '<form class="d-grid gap-2" id="deleteForm" style="max-width: 1000px; margin: 0 auto 1em !important; padding: 0 1.5em;">',
                 '   <input type="submit" value="Borrar" class="btn btn-danger">',
                 '</form>'
             ].join("");
@@ -193,6 +193,7 @@ export default abstract class FormTemplate {
 
         if (this.main) {
             this.main.innerHTML += form;
+            this.main.style.paddingBottom = "2em";
         } else {
             throw new Error("Can't find the element with id `main`.");
         }

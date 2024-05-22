@@ -1,6 +1,7 @@
 import FormTemplate from "../modules/form_template.js";
 import { urls_api, urls_front } from "../../settings/urls.js";
 import { HotelModel } from "../modules/interfaces.js";
+import utilities from "../../settings/modules/utilities.js";
 
 export default class HotelFormTemplate extends FormTemplate {
 
@@ -17,6 +18,7 @@ export default class HotelFormTemplate extends FormTemplate {
         let buttonName: string = this.typeForm == "register" ? "Agregar hotel" : "Editar hotel";
 
         return this.createForm("Hotel", buttonName, [
+            { type: { typeElement: "input", typeInput: "file" }, nameId: "Image", nameLabel: "Imagen principal", cls: "col-md-12", attributes: { accept: "image/*" } },
             { type: { typeElement: "input", typeInput: "text" }, nameId: "Name", nameLabel: "Nombre del hotel", cls: "col-md-6" },
             { type: { typeElement: "input", typeInput: "tel" }, nameId: "Phone", nameLabel: "Teléfono", cls: "col-md-6" },
             { type: { typeElement: "textarea" }, nameId: "Address", nameLabel: "Dirección", cls: "col-12", attributes: { rows: 2 } },
@@ -32,6 +34,7 @@ export default class HotelFormTemplate extends FormTemplate {
     protected async getFormAttributes() {
         try {
             const name = <string>this.validateField("inputName", "inputNameFeedback", { typeElement: "text", required: true, max_length: 100 });
+            const imageFile = this.validateField("inputImage", "inputImageFeedback", { typeElement: "file", required: true, max_length: 20_971_520 });
             const description = <string>this.validateField("inputDescription", "inputDescriptionFeedback", { typeElement: "text", required: true, max_length: 5000 });
             const phone = <string>this.validateField("inputPhone", "inputPhoneFeedback", { typeElement: "text", required: true, max_length: 15 });
             const address = <string>this.validateField("inputAddress", "inputAddressFeedback", { typeElement: "text", required: true, max_length: 1000 });
@@ -41,8 +44,10 @@ export default class HotelFormTemplate extends FormTemplate {
             const latitude = <number>this.validateField("inputLatitude", "inputLatitudeFeedback", { typeElement: "number", required: true, min_length: -90, max_length: 90 });
             const longitude = <number>this.validateField("inputLongitude", "inputLongitudeFeedback", { typeElement: "number", required: true, min_length: -180, max_length: 180 });
 
+            const image = await utilities.fileToBase64(imageFile);
+
             return {
-                name, description, phone, address, city, state, rating,
+                name, image, description, phone, address, city, state, rating,
                 coordinates: { latitude, longitude }
             };
 
@@ -53,6 +58,7 @@ export default class HotelFormTemplate extends FormTemplate {
 
     private getFormElements() {
         let name = <HTMLInputElement>document.getElementById("inputName");
+        let image = <HTMLInputElement>document.getElementById("inputImage");
         let phone = <HTMLInputElement>document.getElementById("inputPhone");
         let address = <HTMLTextAreaElement>document.getElementById("inputAddress");
         let description = <HTMLTextAreaElement>document.getElementById("inputDescription");
@@ -62,7 +68,7 @@ export default class HotelFormTemplate extends FormTemplate {
         let latitude = <HTMLInputElement>document.getElementById("inputLatitude");
         let longitude = <HTMLInputElement>document.getElementById("inputLongitude");
 
-        return { name, phone, address, description, city, state, rating, latitude, longitude };
+        return { name, image, phone, address, description, city, state, rating, latitude, longitude };
     }
 
     protected fillFields(hotel: HotelModel): void {

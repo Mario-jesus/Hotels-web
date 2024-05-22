@@ -1,5 +1,5 @@
-let host_api: string = "http://127.0.0.1:8000/api/v1/";
-let host_front: string = "http://127.0.0.1:5500/";
+let host_api: string = "http://192.168.1.69:8000/api/v1/";
+let host_front: string = "http://192.168.1.69:5500/";
 
 export var urls_api = {
     user_detail: `${host_api}auth/user/`,
@@ -16,6 +16,7 @@ export var urls_api = {
     accountLink: `${host_api}generate_account_link/`,
     roomAvailability: `${host_api}room_availability/`,
     reservationWithNewCard: `${host_api}reservations/new_card/`,
+    reservations : `${host_api}reservations/`,
 };
 
 export var urls_front = {

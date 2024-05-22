@@ -14,7 +14,7 @@ export default abstract class ListTemplate {
             '<div class="container">',
             '   <div id="liveAlertPlaceholder" class="mt-3"></div>',
             `   <h3 class="my-3 text-center">${this.title}</h3>`,
-            '   <div id="selectContainer"></div>',
+            '   <div id="selectContainer" style="padding-bottom: 2em;"></div>',
             '   <div id="itemsContainer" class="d-flex flex-wrap justify-content-evenly align-content-around" style="min-height: 80vh;">',
             '   </div>',
             '</div>',

@@ -41,7 +41,7 @@ export default class ServicesFormTemplate extends FormTemplate {
     protected async getFormAttributes() {
         try {
             const hotel = <string>this.validateField("inputHotel", "inputHotelFeedback", { typeElement: "select", required: true });
-            const service = <string>this.validateField("inputService", "inputServiceFeedback", { typeElement: "select", required: true });
+            const service = <string>this.validateField("inputService", "inputServiceFeedback", { typeElement: "select", required: true, isInteger: true });
             const price = <number>this.validateField("inputPrice", "inputPriceFeedback", { typeElement: "number", required: false, min_length: 0.1, max_length: 999999.99 });
             const description = <string>this.validateField("inputDescription", "inputDescriptionFeedback", { typeElement: "text", required: false, max_length: 2000 });
 
