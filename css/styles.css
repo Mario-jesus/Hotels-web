@@ -142,7 +142,7 @@
     min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 60px;
+    grid-template-rows: 90vh 60px;
     grid-template-areas: 
         "list map"
         "pag pag"
