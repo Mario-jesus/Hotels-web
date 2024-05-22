@@ -10,7 +10,7 @@ export default class HotelListTemplate extends ListTemplate {
 
     protected itemTemplate(items: any): string {
         let html: string = "";
-        items.results.forEach((hotel: HotelModel) => {
+        items.forEach((hotel: HotelModel) => {
             html += [
                 '<div class="card mx-2 mb-3" style="width: 18rem;">',
                 `   <img src="${hotel.image}" class="card-img-top" alt="${hotel.name}">`,

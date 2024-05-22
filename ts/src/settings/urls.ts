@@ -1,5 +1,7 @@
-let host_api: string = "http://192.168.1.69:8000/api/v1/";
-let host_front: string = "http://192.168.1.69:5500/";
+let host: string = "127.0.0.1";
+
+let host_api: string = `http://${host}:8000/api/v1/`;
+let host_front: string = `http://${host}:5500/`;
 
 export var urls_api = {
     user_detail: `${host_api}auth/user/`,
@@ -7,6 +9,7 @@ export var urls_api = {
     logout: `${host_api}auth/logout/`,
     signup: `${host_api}auth/signup/`,
     hotels: `${host_api}hotels/`,
+    all_hotels: `${host_api}all_hotels/`,
     roomType: `${host_api}hotel_room-type/`,
     hotelServices: `${host_api}hotel_services/`,
     services: `${host_api}services/`,

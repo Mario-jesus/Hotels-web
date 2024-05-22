@@ -52,7 +52,7 @@ export default {
             reader.readAsDataURL(file);
         });
     },
-    createPagination(url_front: string, count: number, next: null | string, current: undefined | string, previous: null | string, params: string = "") {
+    createPagination(url_front: string, count: number, next: null | string, current: undefined | string, previous: null | string, params: string = "", initialParameters = false) {
         let paginationContainer = document.getElementById("paginationContainer");
         if (!paginationContainer) throw new Error("'pagination' not found.");
         if (!current) current = "1";
@@ -61,15 +61,17 @@ export default {
         if (next) next = new URLSearchParams(next.substring(next.indexOf("?") + 1)).get("page") ?? String(Number(current) + 1);
         let pagesList: string[] = [];
 
-        if (previous) pagesList.push(`<li class="page-item"><a class="page-link" href="${url_front}&page=${previous}${params}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`);
+        let page = initialParameters ? "?page=" : "&page=";
+
+        if (previous) pagesList.push(`<li class="page-item"><a class="page-link" href="${url_front}${page}${previous}${params}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`);
         else pagesList.push(`<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`);
 
         for (let i = 1; i <= pages; i++) {
-            if (i == Number(current)) pagesList.push(`<li class="page-item active"><a class="page-link" href="${url_front}&page=${i}${params}">${i}</a></li>`);
-            else pagesList.push(`<li class="page-item"><a class="page-link" href="${url_front}&page=${i}${params}">${i}</a></li>`);
+            if (i == Number(current)) pagesList.push(`<li class="page-item active"><a class="page-link" href="${url_front}${page}${i}${params}">${i}</a></li>`);
+            else pagesList.push(`<li class="page-item"><a class="page-link" href="${url_front}${page}${i}${params}">${i}</a></li>`);
         }
 
-        if (next) pagesList.push(`<li class="page-item"><a class="page-link" href="${url_front}&page=${next}${params}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`);
+        if (next) pagesList.push(`<li class="page-item"><a class="page-link" href="${url_front}${page}${next}${params}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`);
         else pagesList.push(`<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`);
 
         paginationContainer.innerHTML = pagesList.join("");

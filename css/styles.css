@@ -64,6 +64,12 @@
     margin-bottom: 20px;
 }
 
+#logOut {
+    color: #000;
+    border: none;
+    background-color: inherit;
+}
+
 #formSearch {
     --border: 3px solid transparent;
     display: flex;
@@ -114,7 +120,6 @@
 
 .section--info {
     display: flex;
-    flex-wrap: wrap-reverse;
     gap: 1.5em;
     justify-content: space-between;
     align-items: flex-start;
@@ -823,7 +828,7 @@
 
 @media only screen and (max-width: 600px) {
     .formCheckout {
-        width: 80vw;
+        width: 90vw;
         min-width: initial;
     }
 }
@@ -841,6 +846,10 @@
     .carousel__body h3 {
         font-size: 1.8rem;
         max-width: 100%;
+    }
+
+    .section--info {
+        flex-wrap: wrap-reverse;
     }
 
     .section__img {
@@ -942,5 +951,10 @@
 
     .form__availability {
         align-self: stretch;
+        flex-wrap: wrap;
+
+        & input[type="submit"] {
+            order: -1;
+        }
     }
 }

@@ -6,9 +6,11 @@ import Session from "../../settings/modules/session.js";
 export default class SignUpFormTemplate extends FormTemplate {
 
     constructor() {
+        let reservationData = sessionStorage.getItem("reservationData");
+        let redirectURL = reservationData ? urls_front.checkout: urls_front.home;
         super(
             urls_api.signup,
-            {redirectURL: urls_front.home, showMessage: false},
+            { redirectURL, showMessage: false },
             "register",
         )
     }

@@ -124,7 +124,7 @@ export default class Home {
 
             // render pagination
             utilities.createPagination(
-                urls_front.home, data.count, data.next, page, data.previous, `search=${keyword}`
+                urls_front.home, data.count, data.next, page, data.previous, `&search=${keyword}`, true
             );
         });
     }

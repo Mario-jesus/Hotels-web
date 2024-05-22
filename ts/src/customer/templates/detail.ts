@@ -396,6 +396,10 @@ export default class Detail {
         });
     }
 
+    protected createReservationRedirect(): string {
+        return urls_front.checkout;
+    }
+
     private createReservation() {
         const button = <HTMLElement>document.getElementById("btnReserve");
         button.addEventListener("click", (e: Event) => {
@@ -430,7 +434,7 @@ export default class Detail {
 
                 // Guardar los datos en el sesion storage y rediridigir al usuario al checkout
                 sessionStorage.setItem("reservationData", JSON.stringify(data));
-                location.href = urls_front.checkout;
+                location.href = this.createReservationRedirect();
             }
         });
     }

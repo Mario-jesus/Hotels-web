@@ -36,13 +36,13 @@ export default abstract class ListTemplate {
             '</select>',
         ].join("\n");
 
-        utilities.renderSelector(urls_api.hotels, "selectHotel", (hotel: any) => {
+        utilities.renderSelector(urls_api.all_hotels, "selectHotel", (hotel: any) => {
             return { value: hotel.id, textContent: `${hotel.name} - ${hotel.city}` };
-        });
+        }, false);
 
         let selectHotel = <HTMLSelectElement>document.getElementById("selectHotel");
         selectHotel.addEventListener("change", (e: any) => {
-            if (e.target.selectedIndex !== 0) this.renderItems(`${urls_api.hotels}${e.target.value}/`);
+            if (e.target.selectedIndex !== 0) this.renderItems(`${urls_api.all_hotels}${e.target.value}/`);
         });
     }
 
@@ -73,7 +73,7 @@ export default abstract class ListTemplate {
         if (this.activeHotelSelector) {
             this.renderSelector();
         } else {
-            this.renderItems(urls_api.hotels);
+            this.renderItems(urls_api.all_hotels);
         }
 
         // Mostrar alertas

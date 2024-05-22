@@ -53,7 +53,7 @@ export default class NavTemplate {
                     '   </a>',
                     '   <ul class="dropdown-menu">',
                     '       <li><a class="dropdown-item" href="#" target="_blank" id="navExpressAccount">Cuenta de express</a></li>',
-                    '       <li><a class="dropdown-item" href="" id="logOut">Cerrar sessión</a></li>',
+                    '       <li><a class="dropdown-item" href=""><button id="logOut">Cerrar sessión</button></a></li>',
                     '   </ul>',
                     '</li>'
                 ].join("");
@@ -72,9 +72,7 @@ export default class NavTemplate {
                     '       Cuenta',
                     '   </a>',
                     '   <ul class="dropdown-menu">',
-                    '       <li><a class="dropdown-item" href="#">Cuenta</a></li>',
-                    '       <li><a class="dropdown-item" href="#">Metodos de pago</a></li>',
-                    '       <li><a class="dropdown-item" href="" id="logOut">Cerrar sessión</a></li>',
+                    '       <li><a class="dropdown-item" href=""><button id="logOut">Cerrar sessión</button></a></li>',
                     '   </ul>',
                     '</li>'
                 ].join("");
@@ -83,7 +81,7 @@ export default class NavTemplate {
             default:
                 items = [
                     '<li class="nav-item">',
-                    '   <a class="nav-link active" aria-current="page" href="#">Inicio</a>',
+                    `   <a class="nav-link active" aria-current="page" href="${urls_front.home}">Inicio</a>`,
                     '</li>',
                     '<li class="nav-item active dropdown">',
                     '   <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">',
@@ -109,7 +107,7 @@ export default class NavTemplate {
         let nav = [
             '<nav class="navbar navbar-expand-lg bg-body-tertiary" id="navbar">',
             '   <div class="container-fluid">',
-            '       <a class="navbar-brand" href="#">Hotels</a>',
+            `       <a class="navbar-brand" href="${urls_front.home}">Hotels</a>`,
             '       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">',
             '           <span class="navbar-toggler-icon"></span>',
             '       </button>',
