@@ -38,7 +38,7 @@ export default abstract class ListTemplate {
 
         utilities.renderSelector(urls_api.all_hotels, "selectHotel", (hotel: any) => {
             return { value: hotel.id, textContent: `${hotel.name} - ${hotel.city}` };
-        }, false);
+        });
 
         let selectHotel = <HTMLSelectElement>document.getElementById("selectHotel");
         selectHotel.addEventListener("change", (e: any) => {

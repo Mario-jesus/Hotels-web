@@ -28,14 +28,14 @@ export default class ServicesFormTemplate extends FormTemplate {
         super.rederForm();
 
         // Renderizar los hoteles en el selector
-        utilities.renderSelector(urls_api.hotels, "inputHotel", (hotel: HotelModel) => {
+        utilities.renderSelector(urls_api.all_hotels, "inputHotel", (hotel: HotelModel) => {
             return { value: hotel.id, textContent: `${hotel.name} - ${hotel.city}` };
         });
 
         // Renderizar los servicios en el selector
         utilities.renderSelector(urls_api.services, "inputService", (service: services) => {
             return { value: service.id, textContent: service.name };
-        }, false);
+        });
     }
 
     protected async getFormAttributes() {

@@ -29,7 +29,7 @@ export default class RoomFormTemplate extends FormTemplate {
         super.rederForm();
 
         // Renderizar los hoteles en el selector
-        utilities.renderSelector(urls_api.hotels, "inputHotel", (hotel: HotelModel) => {
+        utilities.renderSelector(urls_api.all_hotels, "inputHotel", (hotel: HotelModel) => {
             return { value: hotel.id, textContent: `${hotel.name} - ${hotel.city}` };
         });
     }
